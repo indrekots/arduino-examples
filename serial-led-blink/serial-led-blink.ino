@@ -1,5 +1,6 @@
 int ledPin = 13;
-int incomingByte = 0;
+int commandHigh = 49;
+int commandLow = 48;
 
 void setup() {
   Serial.begin(9600);
@@ -8,15 +9,16 @@ void setup() {
 
 void loop() {
   while (Serial.available() > 0) {
-    incomingByte = Serial.read();
-    if (incomingByte == 49) {
+    int incomingByte = Serial.read();
+    if (incomingByte == commandHigh) {
       digitalWrite(ledPin, HIGH);
     }
-    else if (incomingByte == 48) {
+    else if (incomingByte == commandLow) {
       digitalWrite(ledPin, LOW);
     }
     else {
-      Serial.println("Unknown command: " + incomingByte);
+      Serial.print("Unknown command: ");
+      Serial.println(incomingByte);
     }
   }
 }
