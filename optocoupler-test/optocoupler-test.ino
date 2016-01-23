@@ -1,10 +1,30 @@
-int controlPin = 2;
-int pinStatus = LOW;
+int backwardsPin = 2;
+int forwardsPin = 3;
+int leftPin = 4;
+int rightPin = 5;
+
 int incomingByte = 0;
 
+bool forwardsPressed = false;
+bool backwardsPressed = false;
+bool rightPressed = false;
+bool leftPressed = false;
+
+const int FORWARDS_PRESSED = 1;
+const int FORWARDS_RELEASED = 2;
+const int BACKWARDS_PRESSED = 131;
+const int BACKWARDS_RELEASED = 4;
+const int RIGHT_PRESSED = 133;
+const int RIGHT_RELEASED = 134;
+const int LEFT_PRESSED = 7;
+const int LEFT_RELEASED = 8;
+
 void setup() {
-  pinMode(2, OUTPUT);
-  Serial.begin(9600);
+  pinMode(backwardsPin, OUTPUT);
+  pinMode(forwardsPin, OUTPUT);
+  pinMode(leftPin, OUTPUT);
+  pinMode(rightPin, OUTPUT);
+  Serial.begin(115200);
 }
 
 void loop() {
@@ -12,19 +32,66 @@ void loop() {
     // read the incoming byte:
     incomingByte = Serial.read();
 
-    if (incomingByte == 115) {
-      digitalWrite(controlPin, HIGH);
+    if (incomingByte == FORWARDS_PRESSED) {
+      forwardsPressed = true;
+    }
+    else if (incomingByte == BACKWARDS_PRESSED) {
+      backwardsPressed = true;
+    }
+
+    if (incomingByte == FORWARDS_RELEASED) {
+      forwardsPressed = false;
+    }
+    else if (incomingByte == BACKWARDS_RELEASED) {
+      backwardsPressed = false;
+    }
+
+    if (incomingByte == RIGHT_PRESSED) {
+      rightPressed = true;
+    }
+    else if (incomingByte == LEFT_PRESSED) {
+      leftPressed = true;  
+    }
+
+    if (incomingByte == RIGHT_RELEASED) {
+      rightPressed = false;
+    }
+    else if (incomingByte == LEFT_RELEASED) {
+      leftPressed = false;
+    }
+    
+
+    if (forwardsPressed == true) {
+      digitalWrite(forwardsPin, HIGH);
     }
     else {
-      digitalWrite(controlPin, LOW);
+      digitalWrite(forwardsPin, LOW);
+    }
+
+    if (backwardsPressed == true) {
+      digitalWrite(backwardsPin, HIGH);
+    }
+    else {
+      digitalWrite(backwardsPin, LOW);
+    }
+
+    if (rightPressed == true) {
+      digitalWrite(rightPin, HIGH);
+    }
+    else {
+      digitalWrite(rightPin, LOW);
+    }
+
+    if (leftPressed == true) {
+      digitalWrite(leftPin, HIGH);
+    }
+    else {
+      digitalWrite(leftPin, LOW);
     }
   
     // say what you got:
-    Serial.print("I received: ");
-    Serial.println(incomingByte, DEC);
-    delay(20);
-  }
-  else {
-    digitalWrite(controlPin, LOW);
+    //Serial.print("I received: ");
+    //Serial.println(incomingByte, DEC);
   }
 }
+
