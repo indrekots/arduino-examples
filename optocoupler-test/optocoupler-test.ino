@@ -29,7 +29,6 @@ void setup() {
 
 void loop() {
   if (Serial.available() > 0) {
-    // read the incoming byte:
     incomingByte = Serial.read();
 
     if (incomingByte == FORWARDS_PRESSED) {
@@ -88,10 +87,6 @@ void loop() {
     else {
       digitalWrite(leftPin, LOW);
     }
-  
-    // say what you got:
-    //Serial.print("I received: ");
-    //Serial.println(incomingByte, DEC);
   }
 }
 
