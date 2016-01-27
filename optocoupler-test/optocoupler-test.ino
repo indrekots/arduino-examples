@@ -30,8 +30,13 @@ void setup() {
 void loop() {
   if (Serial.available() > 0) {
     incomingByte = Serial.read();
+    
 
-    if (incomingByte == FORWARDS_PRESSED) {
+  }
+}
+
+void detectKeyPresses() {
+  if (incomingByte == FORWARDS_PRESSED) {
       forwardsPressed = true;
     }
     else if (incomingByte == BACKWARDS_PRESSED) {
@@ -58,35 +63,35 @@ void loop() {
     else if (incomingByte == LEFT_RELEASED) {
       leftPressed = false;
     }
-    
+}
 
-    if (forwardsPressed == true) {
-      digitalWrite(forwardsPin, HIGH);
-    }
-    else {
-      digitalWrite(forwardsPin, LOW);
-    }
+void handlePinOutputs() {
+  if (forwardsPressed == true) {
+    digitalWrite(forwardsPin, HIGH);
+  }
+  else {
+    digitalWrite(forwardsPin, LOW);
+  }
 
-    if (backwardsPressed == true) {
-      digitalWrite(backwardsPin, HIGH);
-    }
-    else {
-      digitalWrite(backwardsPin, LOW);
-    }
+  if (backwardsPressed == true) {
+    digitalWrite(backwardsPin, HIGH);
+  }
+  else {
+    digitalWrite(backwardsPin, LOW);
+  }
 
-    if (rightPressed == true) {
-      digitalWrite(rightPin, HIGH);
-    }
-    else {
-      digitalWrite(rightPin, LOW);
-    }
+  if (rightPressed == true) {
+    digitalWrite(rightPin, HIGH);
+  }
+  else {
+    digitalWrite(rightPin, LOW);
+  }
 
-    if (leftPressed == true) {
-      digitalWrite(leftPin, HIGH);
-    }
-    else {
-      digitalWrite(leftPin, LOW);
-    }
+  if (leftPressed == true) {
+    digitalWrite(leftPin, HIGH);
+  }
+  else {
+    digitalWrite(leftPin, LOW);
   }
 }
 
